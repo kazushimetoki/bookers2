@@ -1,0 +1,81 @@
+<div class="container">
+  <div class ="row">
+    <% if @book.errors.any? %>
+  <%= @book.errors.count %>can't be blank
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+    <% end %>
+    <div class="col-md-3">
+      <h1>Users info</h1>
+      <h3 class="profile-name"></h3>
+      <%= image_tag current_user.get_profile_image(100,100) %>
+      <table class="table">
+        <tr>
+          <th>name</th>
+          <th><%= current_user.name %></th>
+        </tr>
+        <tr>
+          <th>introduction</th>
+          <th><%= current_user.introduction %></th>
+        </tr>
+      </table>
+      
+      <div class="row">
+        <%= link_to edit_user_path(current_user.id) ,class:"btn btn-info btn-sm btn-block md-3" do %>
+          <i class="fas fa-users"></i>
+          <i class="fas fa-user-cog"></i>
+        <% end %>
+      </div>
+
+      
+      <!--<div class="col-md-3">-->
+        
+      <h3>New book</h3>
+      
+      <%= form_with model: @book do |f| %>
+        <h4>Title</h4>
+        <%= f.text_field :title %>
+        
+        <h4>Opinion</h4>
+        <%= f.text_area :body %>
+        
+        <%= f.submit 'Create Book', class:"btn btn-success"%>
+      <% end %>
+    </div>
+    
+    <!--</div>-->
+    
+    <div class="col-md-8 offset-md-1">
+      <h5>Books</h5>
+      
+      <table class="table table-hover table-inverse">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Opinion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @books.each do |book| %>
+            <tr>
+              <td>
+                <%= link_to user_path(book.user) do %>
+                  <%= image_tag book.user.get_profile_image(80,80) %>
+                <% end %>
+              </td>
+              <td><%= link_to book.title, book_path(book.id) %></td>
+              <td><%= book.body %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- ユーザーの投稿一覧 -->
+<%#= render 'books/book', books: @books %>
+<p>CopyRight Infratop.inc</p>

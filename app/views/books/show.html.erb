@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<div class="container px-5 px-sm-0">
+  <div class = "row">
+  <div class="col-md-3">
+    <h1>Users info</h1>
+    <h3 class="profile-name"></h3>
+  <%= image_tag @user.get_profile_image(100,100) %>
+  <table class="table">
+   <tr>
+    <th>name</th>
+    <th><%= @user.name %></th>
+    </tr>
+      <tr>
+    <th>introduction</th>
+    <th><%= @user.introduction %></th>
+    </tr>
+  </table>
+  <script src="https://kit.fontawesome.com/b88cbfadf5.js" crossorigin="anonymous"></script>
+  <li class="nav-item">
+    <%= link_to edit_user_path(@book.user.id), class:"btn btn-info btn-sm btn-block md-3" do %>
+    <i class="fas fa-users"></i>
+    <i class="fas fa-user-cog"></i>
+    <% end %>
+  </li>
+  
+  <!--<div class="col-md-3">-->
+    <h3>New book</h3>
+    <%= form_with model: Book.new do |f| %>
+  <h4>Title</h4>
+  <%= f.text_field :title %>
+	
+  <h4>Opinion</h4>
+  <%= f.text_area :body %>
+	
+  <%= f.submit 'Create Book', class:"btn btn-success" %>
+<% end %>
+  </div>
+<!--</div>-->
+<div class="col-md-8 offset-md-1">
+  <h5>Book detail</h5>
+  <table class="table table-hover table-inverse">
+    <div>
+  <td>
+    <%= link_to user_path(@book.user) do %> 
+      <%= image_tag @book.user.get_profile_image(80,80) %><br>
+      <%= @book.user.name %>
+    <% end %>
+  </td>
+  
+  <td><p><%= @book.title %></p></td>
+  <td><p><%= @book.body %></p></td>
+  <% if @book.user_id == current_user.id %>
+  <td><%= link_to "Edit", edit_book_path, class:"btn btn-sm btn-success" %></td>
+  <td><%= link_to 'Destroy',book_path(@book.id), class:"btn btn-sm btn-danger",method: :delete, "data-confirm" => "本当に消しますか？" %></td>
+  <% end %>
+</div>
+<p><%= @user.name %></p>
+    <tr></tr>
+  </table>
+  </div>
+ </div> 
+ </div>
+</div>
+<!-- ユーザーの投稿一覧 -->
+<%#= render 'books/book', books: @books %>
+
